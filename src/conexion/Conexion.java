@@ -1,39 +1,43 @@
 package conexion;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
 
-    private String nombreBd="MVC";
-    private String usuario="root";
-    private String password="";
-    private String url="jdbc:mysql://localhost/MVC";
+    private static final String NOMBRE_BD = "MVC";
+    private static final String USUARIO = "root";
+    private static final String PASSWORD = "";
+    private static final String URL = "jdbc:mysql://localhost/" + NOMBRE_BD;
 
-    Connection conn =null;
+    private static Connection conn = null;
 
-    public Conexion(){
-        try{
-            Class.forName("com.mysql.cj.jbdc.Driver");
-            conn= DriverManager.getConnection(url,usuario,password);
-            if (conn==null){
-                System.err.println("Conexion Fallida a la BD: "+nombreBd);
+    public static Connection getConnection() {
+        if (conn == null) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                conn = DriverManager.getConnection(URL, USUARIO, PASSWORD);
+                System.out.println("Conexión exitosa a la BD: " + NOMBRE_BD);
+            } catch (ClassNotFoundException e) {
+                System.err.println("Driver JDBC no encontrado: " + e.getMessage());
+            } catch (SQLException e) {
+                System.err.println("Error de SQL: " + e.getMessage());
             }
-        } catch (ClassNotFoundException e) {
-            System.err.println("Ocurre una ClassNotFoundException: "+e.getMessage());
-        } catch (SQLException e){
-            System.err.println("ocure una SQLException: "+e.getMessage());
-
         }
-    }
-
-    public Connection getConnection(){
         return conn;
     }
 
-    public void desconectar(){
-        conn=null;
+    public static void desconectar() {
+        if (conn != null) {
+            try {
+                conn.close();
+                conn = null;
+                System.out.println("Desconectado de la BD: " + NOMBRE_BD);
+            } catch (SQLException e) {
+                System.err.println("Error al desconectar: " + e.getMessage());
+            }
+        }
     }
 }
+
