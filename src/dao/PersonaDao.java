@@ -16,7 +16,7 @@ public class PersonaDao {
 
 
     public void registrarPersona(PersonaVo persona) {
-        String sql = "INSERT INTO personas (documento, nombre, direccion, telefono) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO persona (documento, nombre, direccion, telefono) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, persona.getDocumento());
@@ -33,7 +33,7 @@ public class PersonaDao {
 
     public ArrayList<PersonaVo> obtenerListaPersonas() {
         ArrayList<PersonaVo> lista = new ArrayList<>();
-        String sql = "SELECT * FROM personas";
+        String sql = "SELECT * FROM persona";
 
         try (Statement stmt = conexion.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -55,4 +55,3 @@ public class PersonaDao {
         return lista;
     }
 }
-
