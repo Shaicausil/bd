@@ -1,3 +1,4 @@
+
 package conexion;
 
 import java.sql.Connection;
@@ -6,10 +7,12 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-    private static final String NOMBRE_BD = "MVC";
+    private static final String NOMBRE_BD = "conexion";
     private static final String USUARIO = "root";
     private static final String PASSWORD = "";
-    private static final String URL = "jdbc:mysql://localhost/" + NOMBRE_BD;
+    private static final String URL = "jdbc:mysql://localhost:3306/"+ NOMBRE_BD+"?useUnicode=true&use"
+            +"JDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"+
+            "serverTimeZone=UTC";
 
     private static Connection conn = null;
 
@@ -40,4 +43,5 @@ public class Conexion {
         }
     }
 }
+
 
